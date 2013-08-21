@@ -1,0 +1,2 @@
+cdrecord -v speed=2 dev=0,0,0 cd.iso
+dev from `cdrecord -scanbus`
