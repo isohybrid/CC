@@ -3,7 +3,7 @@
 sudo su
 
 #reliable packages
-yes | apt-get install libssl-dev libpcre3 libpcre3-dev
+yes | apt-get install libssl-dev libpcre3 libpcre3-dev php5-fpm
 
 myPath="/usr/development"
 if [ ! -d "${myPath}" ];then
