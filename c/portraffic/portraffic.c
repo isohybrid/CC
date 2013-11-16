@@ -34,7 +34,11 @@ int main(int argc, char *argv[])
   }
 
   /* open network device for packet capture */
-  device = pcap_open_live(argv[1], MAXBYTES2CAPTURE, 1, 512, errBuf);
+  device = pcap_open_live(argv[1], MAXBYTES2CAPTURE, 1, 0, errBuf);
+  if(!device){
+    printf("error: pcap_open_live(): %s\n", errBuf);
+    exit(1);
+  }
 
   /* Look up info from the packet capture */
   pcap_lookupnet( argv[1], &netaddr, &mask, errBuf);
@@ -48,9 +52,18 @@ int main(int argc, char *argv[])
   while(1){
     packet = pcap_next(device, &pkthdr);
     /* Assuming is Ethernet! */
-    ip_hdr = (struct ip *)(packet+14);
+    ip_hdr = (struct ip *)(packet+20);
     /* Assuming no IP options! */
-    tcp_hdr = (struct tcphdr *)(packet+14+20);
+    tcp_hdr = (struct tcphdr *)(packet+20+20);
+
+    printf("length : %d\n", pkthdr.len);
+    int i=0;
+    for(i=0; i < pkthdr.len; i++){
+      printf("%02x", packet[i]);
+      if((i+1) % 16 == 0)
+        printf("\n");
+    }
+
     printf("------------------------------------------------\n");
     printf("Received Packet:         %d\n", ++count);
     printf("DST IP:                  %s\n", inet_ntoa(ip_hdr->ip_dst));
@@ -60,7 +73,7 @@ int main(int argc, char *argv[])
     printf("------------------------------------------------\n");
   }
 
-  // pcap_close(device);
+  pcap_close(device);
 
   return 0;
 }
