@@ -2,10 +2,11 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
-  char errBuf[PCAP_ERRBUF_SIZE], * devStr;
+  char errBuf[PCAP_ERRBUF_SIZE], * devStr=NULL;
 
   /* get a device */
   devStr = pcap_lookupdev(errBuf);
