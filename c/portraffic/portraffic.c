@@ -52,10 +52,11 @@ int main(int argc, char *argv[])
   while(1){
     packet = pcap_next(device, &pkthdr);
     /* Assuming is Ethernet! */
-    ip_hdr = (struct ip *)(packet+20);
+    ip_hdr = (struct ip *)(packet+14);
     /* Assuming no IP options! */
-    tcp_hdr = (struct tcphdr *)(packet+20+20);
+    tcp_hdr = (struct tcphdr *)(packet+14+20);
 
+    /*
     printf("length : %d\n", pkthdr.len);
     int i=0;
     for(i=0; i < pkthdr.len; i++){
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
       if((i+1) % 16 == 0)
         printf("\n");
     }
+    */
 
     printf("------------------------------------------------\n");
     printf("Received Packet:         %d\n", ++count);
