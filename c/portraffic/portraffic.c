@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
   pcap_lookupnet( argv[1], &netaddr, &mask, errBuf);
 
   /* Compiles the filter expression */
-  pcap_compile(device, &filter, "tcp", 1, mask);
+  pcap_compile(device, &filter, "(tcp) or (udp)", 1, mask);
 
   /* load the filter program into the packet capture device. */
   pcap_setfilter(device, &filter);
