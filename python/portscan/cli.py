@@ -1,28 +1,30 @@
 #!/usr/bin/env python
 
-import socket
+import json
+from socket import *
 
 PORT = 22222
 BUFSIZ = 1024
 
 data = {
-    "server":"p1.5bird.com",
-    "server_port":23715,
-    "local_port":8080,
+    "server":"115.28.15.60",
+    "server_port":22,
+    "local_port":46780,
     "password":"k78931"
 }
 
-data['server'] = socket.gethostbyaddr(data['server'])[2][0]
+# data['server'] = socket.gethostbyaddr(data['server'])[2][0]
 print data
 
-tcpCliSock = socket.socket(AF_INET ,SOCK_STREAM)
+tcpCliSock = socket(AF_INET ,SOCK_STREAM)
 tcpCliSock.connect((data['server'], PORT))
 
 while True:
-  tcpCliSock.send(data)
+  encodedjson = json.dumps(data)
+  tcpCliSock.send(encodedjson)
   tmp = tcpCliSock.recv(BUFSIZ)
   if not tmp:
     break
-  print tmp
+  print json.loads(tmp)
 
 tcpCliSock.close()

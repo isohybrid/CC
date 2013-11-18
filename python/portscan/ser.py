@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
-import socket
+from socket import *
 from time import ctime
+import json
 
 HOST = '115.28.15.60'
 PORT = 22222
 BUFSIZ = 1024
 
-tcpSerSock = socket.socket(AF_INET, SOCK_STREAM)
+tcpSerSock = socket(AF_INET, SOCK_STREAM)
 tcpSerSock.bind((HOST, PORT))
 tcpSerSock.listen(5)
 
@@ -17,10 +18,11 @@ while(True):
   print 'Connected from:', addr, '...'
 
   while True:
-    data = tcpCliSock.recv(BUFSIZ)
+    encodedjson = tcpCliSock.recv(BUFSIZ)
     if not data:
       break
-    tcpCliSock.send('[%s] %s' % (ctime(), data))
+    tcpCliSock.send('[%s] %s' % (ctime(), encodedjson))
+    print json.loads(encodedjson)
 
   tcpCliSock.close()
 tcpSerSock.close()
