@@ -14,7 +14,7 @@ data = {
 }
 
 # data['server'] = socket.gethostbyaddr(data['server'])[2][0]
-print data
+# print data
 
 tcpCliSock = socket(AF_INET ,SOCK_STREAM)
 tcpCliSock.connect((data['server'], PORT))
@@ -25,6 +25,6 @@ while True:
   tmp = tcpCliSock.recv(BUFSIZ)
   if not tmp:
     break
-  print json.loads(tmp)
+  print tmp
 
 tcpCliSock.close()
