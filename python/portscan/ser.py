@@ -19,7 +19,7 @@ while(True):
 
   while True:
     encodedjson = tcpCliSock.recv(BUFSIZ)
-    if not data:
+    if not encodedjson:
       break
     tcpCliSock.send('[%s] %s' % (ctime(), encodedjson))
     print json.loads(encodedjson)
