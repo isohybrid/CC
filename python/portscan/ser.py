@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 
-from socket import *
+import socket
 from time import ctime
 
-HOST = '118.121.106.44'
-PORT = 21567
+HOST = '115.28.15.60'
+PORT = 22222
 BUFSIZ = 1024
-ADDR = (HOST, PORT)
 
-tcpSerSock = socket(AF_INET, SOCK_STREAM)
-tcpSerSock.bind(ADDR)
+tcpSerSock = socket.socket(AF_INET, SOCK_STREAM)
+tcpSerSock.bind((HOST, PORT))
 tcpSerSock.listen(5)
 
-while True:
+while(True):
   print 'waiting for connection...'
   tcpCliSock, addr = tcpSerSock.accept()
-  print '...connected from:', addr
+  print 'Connected from:', addr, '...'
 
   while True:
     data = tcpCliSock.recv(BUFSIZ)
